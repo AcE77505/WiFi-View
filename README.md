@@ -2,7 +2,7 @@
  
 快速查看与管理在 Android 设备上连过的 WiFi 的密码
 
- **本项目由[WiFi-View](https://github.com/JamGmilk/WiFi-View) fork，将逐步修复和完善项目**
+ **本项目由[WiFi-View](https://github.com/JamGmilk/WiFi-View) fork，将逐步修复和完善项目，部分逻辑由AI辅助完成**
 
 ### 应用特性
 - 支持 Android 4.4 +
