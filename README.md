@@ -2,9 +2,10 @@
  
 快速查看与管理在 Android 设备上连过的 WiFi 的密码
 
+ **本项目由[WiFi-View](https://github.com/JamGmilk/WiFi-View) fork，将逐步修复和完善项目**
 
 ### 应用特性
-- 支持 Android 4.0 +
+- 支持 Android 4.4 +
 - 支持显示中文名称的 WiFi
 - 支持一键复制 SSID 与密码
 - 支持备份与恢复
