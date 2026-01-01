@@ -2,7 +2,6 @@ package com.zzz.wifiview;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,20 +29,12 @@ public class MainActivity extends Activity {
         noROOTDialog.setTitle("无法获取 ROOT 权限");
         noROOTDialog.setCancelable(false);
         noROOTDialog.setMessage("需要 ROOT 权限以访问 WiFi 密码数据。");
-        noROOTDialog.setPositiveButton("关闭", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
-        noROOTDialog.setNeutralButton("卸载", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Uri uri = Uri.parse("package:com.zzz.wifiview");
-                Intent intent = new Intent(Intent.ACTION_DELETE, uri);
-                startActivity(intent);
-                finish();
-            }
+        noROOTDialog.setPositiveButton("关闭", (dialog, which) -> finish());
+        noROOTDialog.setNeutralButton("卸载", (dialog, which) -> {
+            Uri uri = Uri.parse("package:com.zzz.wifiview");
+            Intent intent = new Intent(Intent.ACTION_DELETE, uri);
+            startActivity(intent);
+            finish();
         });
         noROOTDialog.show();
     }
@@ -59,11 +50,7 @@ public class MainActivity extends Activity {
             os.writeBytes("exit\n");
             os.flush();
             int exitValue = process.waitFor();
-            if (exitValue == 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return exitValue == 0;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
