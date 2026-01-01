@@ -5,15 +5,18 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import java.io.DataOutputStream;
 
 public class MainActivity extends Activity {
-    
+
+    private static final String TAG = "MainActivity"; // 添加日志标签
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(android.R.style.Theme_DeviceDefault); // 暗色主题
-        
+
         // 检测是否获取root，有则启动ViewActivity
         if (isRoot()) {
             startActivity(new Intent().setClassName("com.zzz.wifiview", "com.zzz.wifiview.ViewActivity"));
@@ -22,8 +25,8 @@ public class MainActivity extends Activity {
             showNoROOTDialog();
         }
     }
-    
-    
+
+
     private void showNoROOTDialog() {
         AlertDialog.Builder noROOTDialog = new AlertDialog.Builder(this);
         noROOTDialog.setTitle("无法获取 ROOT 权限");
@@ -38,9 +41,9 @@ public class MainActivity extends Activity {
         });
         noROOTDialog.show();
     }
-    
-    
-    /** 判断应用是否被授予root权限 */
+
+
+    /** 判断是否被授予root权限 */
     public static synchronized boolean isRoot() {
         Process process = null;
         DataOutputStream os = null;
@@ -52,19 +55,26 @@ public class MainActivity extends Activity {
             int exitValue = process.waitFor();
             return exitValue == 0;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Root检测失败", e);
             return false;
         } finally {
             try {
                 if (os != null) {
                     os.close();
                 }
-                process.destroy();
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e(TAG, "关闭DataOutputStream失败", e);
+            }
+
+            try {
+                if (process != null) {
+                    process.destroy();
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "销毁进程失败", e);
             }
         }
     }
-    
-    
+
+
 }
